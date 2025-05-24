@@ -24,3 +24,11 @@ datasets = DatasetDict({
     "validation": dev_dataset,
     "test": test_dataset
 })
+# 3. لود کردن توکنایزر
+tokenizer = AutoTokenizer.from_pretrained("HooshvareLab/bert-fa-base-uncased")
+
+# 4. توکنایز کردن داده‌ها
+def tokenize_function(examples):
+    return tokenizer(examples["comment"], padding="max_length", truncation=True, max_length=512)
+
+tokenized_datasets = datasets.map(tokenize_function, batched=True)
