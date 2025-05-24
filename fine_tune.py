@@ -32,3 +32,10 @@ def tokenize_function(examples):
     return tokenizer(examples["comment"], padding="max_length", truncation=True, max_length=512)
 
 tokenized_datasets = datasets.map(tokenize_function, batched=True)
+# 5. آماده‌سازی داده‌ها
+tokenized_datasets = tokenized_datasets.remove_columns(["comment"])
+tokenized_datasets = tokenized_datasets.rename_column("label_id", "labels")
+tokenized_datasets.set_format("torch")
+
+# 6. لود کردن مدل
+model = AutoModelForSequenceClassification.from_pretrained("HooshvareLab/bert-fa-base-uncased", num_labels=2)
