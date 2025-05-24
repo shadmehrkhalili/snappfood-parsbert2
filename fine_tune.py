@@ -2,7 +2,7 @@
 import pandas as pd
 import csv
 from datasets import Dataset, DatasetDict
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
 
 # 2. لود کردن دیتاست‌ها
 train_df = pd.read_csv("train.csv", sep="\t", quoting=csv.QUOTE_ALL, encoding="utf-8")
@@ -57,9 +57,8 @@ training_args = TrainingArguments(
 )
 
 # 8. تعریف متریک
-from datasets import load_metric
 def compute_metrics(eval_pred):
-    metric = load_metric("accuracy")
+    metric = evaluate.load("accuracy")  # استفاده از evaluate.load
     logits, labels = eval_pred
     predictions = logits.argmax(axis=-1)
     return metric.compute(predictions=predictions, references=labels)
