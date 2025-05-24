@@ -10,7 +10,7 @@
 
 train.csv, dev.csv, test.csv: دیتاست‌ها (۵۶۷۰۰ train، ۶۳۰۰ validation، ۷۰۰۰ test)
 fine_tune.py: کد تست مدل
-test_results.txt: نتایج تست (دقت ۸۸.۰۱٪، precision، recall، F1)
+test_results.txt: نتایج تست (دقت ۸۸.۰۱٪، 
 .git: تاریخچه تغییرات پروژه
 
 روش کار
@@ -23,7 +23,6 @@ test_results.txt: نتایج تست (دقت ۸۸.۰۱٪، precision، recall، F
 نتایج
 
 دقت: ۸۸.۰۱٪ (خیلی نزدیک به مدل حرفه‌ای HooshvareLab با F1 ۸۷.۹۸٪)
-متریک‌ها: Accuracy، Precision، Recall، و F1 در test_results.txt
 مقایسه: دقت به‌دست‌آمده با مدل‌های حرفه‌ای قابل مقایسه‌ست، که نشان‌دهنده موفقیت فرآیند فاین‌تیون است.
 
 تاریخچه توسعه
