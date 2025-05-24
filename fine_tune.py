@@ -39,3 +39,39 @@ tokenized_datasets.set_format("torch")
 
 # 6. لود کردن مدل
 model = AutoModelForSequenceClassification.from_pretrained("HooshvareLab/bert-fa-base-uncased", num_labels=2)
+# 7. تنظیمات فاین‌تیون
+training_args = TrainingArguments(
+    output_dir="./results",
+    eval_strategy="epoch",
+    save_strategy="epoch",
+    learning_rate=2e-5,
+    per_device_train_batch_size=16,
+    per_device_eval_batch_size=16,
+    num_train_epochs=2,
+    weight_decay=0.01,
+    load_best_model_at_end=True,
+    metric_for_best_model="accuracy",
+    report_to="none",
+    save_total_limit=2,
+    fp16=True
+)
+
+# 8. تعریف متریک
+from datasets import load_metric
+def compute_metrics(eval_pred):
+    metric = load_metric("accuracy")
+    logits, labels = eval_pred
+    predictions = logits.argmax(axis=-1)
+    return metric.compute(predictions=predictions, references=labels)
+
+# 9. تعریف Trainer
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=tokenized_datasets["train"],
+    eval_dataset=tokenized_datasets["validation"],
+    compute_metrics=compute_metrics,
+)# 10. اجرای تست
+test_results = trainer.evaluate()
+with open("test_results.txt", "w") as f:
+    f.write(f"Test Accuracy: {test_results['eval_accuracy']}\n")
